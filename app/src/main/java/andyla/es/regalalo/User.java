@@ -17,10 +17,4 @@ public class User {
         this.password=password;
     }
 
-   public User(JSONObject objetoJSON) throws JSONException {
-        username = objetoJSON.getString("nombre");
-        password = objetoJSON.getString("password");
-        userId = objetoJSON.getInt("id");
-    }
-
 }

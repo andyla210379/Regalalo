@@ -1,7 +1,7 @@
 package andyla.es.regalalo;
 
 /**
- * Creado por Hermosa Programación
+ * Creado AndresGarcia
  */
 public class Regalo {
     private int imagen;

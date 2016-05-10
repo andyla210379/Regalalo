@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Creado por Hermosa Programación
+ * Creado por Andyla
  */
 public class RegaloAdapter extends RecyclerView.Adapter<RegaloAdapter.AnimeViewHolder> {
     private List<Regalo> items;
@@ -23,6 +23,8 @@ public class RegaloAdapter extends RecyclerView.Adapter<RegaloAdapter.AnimeViewH
 
         public AnimeViewHolder(View v) {
             super(v);
+            //
+            // Enlace con el layout
             imagen = (ImageView) v.findViewById(R.id.imagen);
             nombre = (TextView) v.findViewById(R.id.nombre);
             visitas = (TextView) v.findViewById(R.id.visitas);
