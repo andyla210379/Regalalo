@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
         //
         cargarPreferencias();
         //
-        Explode explode = new Explode();
+        /*Explode explode = new Explode();
         explode.setDuration(3000);// Duración en milisegundos
-        getWindow().setEnterTransition(explode);
+        getWindow().setEnterTransition(explode);*/
         //
         // Inicializar tarjetas
         List<Regalo> items = new ArrayList<>();
@@ -59,6 +60,16 @@ public class MainActivity extends AppCompatActivity {
         //
         // Obtener el Recycler
         recycler = (RecyclerView) findViewById(R.id.reciclador);
+        //
+        recycler.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                    public static final String TAG ="" ;
+
+                    @Override public void onItemClick(View view, int position) {
+                        Log.d(TAG, "onClick  dflkjasdlkfjsfldjdsalkfja"+position);
+                    }
+                })
+        );
         //recycler.setHasFixedSize(true);
 
         // Usar un administrador para LinearLayout

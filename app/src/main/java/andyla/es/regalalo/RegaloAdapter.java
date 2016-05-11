@@ -16,7 +16,7 @@ import java.util.List;
 public class RegaloAdapter extends RecyclerView.Adapter<RegaloAdapter.AnimeViewHolder> {
     private List<Regalo> items;
 
-    public static class AnimeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class AnimeViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG ="" ;
         // Campos respectivos de un item
         public ImageView imagen;
@@ -27,16 +27,17 @@ public class RegaloAdapter extends RecyclerView.Adapter<RegaloAdapter.AnimeViewH
             super(v);
             //
             // Enlace con el layout
-            v.setOnClickListener(this);
+           //v.setOnClickListener(this);
+            //mTextView = (TextView) view
             imagen = (ImageView) v.findViewById(R.id.imagen);
             nombre = (TextView) v.findViewById(R.id.nombre);
             visitas = (TextView) v.findViewById(R.id.visitas);
         }
-
+        /*
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "onClick " + getPosition() + " " + nombre.getText());
-        }
+            Log.d(TAG, "onClick  dflkjasdlkfjsfldjdsalkfja");
+        }*/
     }
 
     public RegaloAdapter(List<Regalo> items) {
