@@ -404,7 +404,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             }
             // TODO: register the new account here.
-            return false;
+            return true;
         }
 
         @Override

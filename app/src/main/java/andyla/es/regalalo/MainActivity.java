@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(R.layout.activity_main);
-
+        //
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //
@@ -46,23 +46,24 @@ public class MainActivity extends AppCompatActivity {
         Explode explode = new Explode();
         explode.setDuration(3000);// Duración en milisegundos
         getWindow().setEnterTransition(explode);
-
-        // Inicializar Animes
+        //
+        // Inicializar tarjetas
         List<Regalo> items = new ArrayList<>();
-
+        //
+        // Añado los items
         items.add(new Regalo(R.drawable.angel, "Angel Beats", usuario.userId));
         items.add(new Regalo(R.drawable.death, "Death Note", usuario.userId));
         items.add(new Regalo(R.drawable.fate, "Fate Stay Night", usuario.userId));
         items.add(new Regalo(R.drawable.nhk, "Welcome to the NHK", usuario.userId));
         items.add(new Regalo(R.drawable.suzumiya, "Suzumiya Haruhi", usuario.userId));
-
+        //
         // Obtener el Recycler
         recycler = (RecyclerView) findViewById(R.id.reciclador);
         //recycler.setHasFixedSize(true);
 
         // Usar un administrador para LinearLayout
-        //lManager = new LinearLayoutManager(this);
-        lManager = new LinearLayoutManager(this);
+        lManager = new GridLayoutManager(this,2);
+       // lManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(lManager);
 
         // Crear un nuevo adaptador

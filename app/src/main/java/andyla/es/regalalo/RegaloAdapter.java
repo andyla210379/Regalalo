@@ -1,6 +1,7 @@
 package andyla.es.regalalo;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,8 @@ import java.util.List;
 public class RegaloAdapter extends RecyclerView.Adapter<RegaloAdapter.AnimeViewHolder> {
     private List<Regalo> items;
 
-    public static class AnimeViewHolder extends RecyclerView.ViewHolder {
+    public static class AnimeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private static final String TAG ="" ;
         // Campos respectivos de un item
         public ImageView imagen;
         public TextView nombre;
@@ -25,9 +27,15 @@ public class RegaloAdapter extends RecyclerView.Adapter<RegaloAdapter.AnimeViewH
             super(v);
             //
             // Enlace con el layout
+            v.setOnClickListener(this);
             imagen = (ImageView) v.findViewById(R.id.imagen);
             nombre = (TextView) v.findViewById(R.id.nombre);
             visitas = (TextView) v.findViewById(R.id.visitas);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.d(TAG, "onClick " + getPosition() + " " + nombre.getText());
         }
     }
 
