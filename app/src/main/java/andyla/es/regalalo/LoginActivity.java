@@ -226,18 +226,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+            mPasswordView.setError("Contraseña muy corta");
             focusView = mPasswordView;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
+            mEmailView.setError("Campo requerido");
             focusView = mEmailView;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
+            mEmailView.setError("Direccion de email incorrecta");
             focusView = mEmailView;
             cancel = true;
         }
@@ -260,14 +260,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return email.contains("@") && (email.contains(".es") || email.contains(".com"));
     }
     //
-    // Si no es un correo valido
+    // Si no es una contraseña valida
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
     }
-
     /**
-     * Muestra el progreso y esconde el log
+     * Muestra el progreso y cambia de view
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
@@ -306,12 +305,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // Retrieve data rows for the device user's 'profile' contact.
                 Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
                         ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-
                 // Select only email addresses.
                 ContactsContract.Contacts.Data.MIMETYPE +
                         " = ?", new String[]{ContactsContract.CommonDataKinds.Email
                 .CONTENT_ITEM_TYPE},
-
                 // Show primary email addresses first. Note that there won't be
                 // a primary email address if the user hasn't specified one.
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
@@ -369,13 +366,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmail = email;
             mPassword = password;
         }
-
+        //
         @Override
         protected Boolean doInBackground(Void... params) {
-
-            URL url = null;
             try {
-                url = new URL("https://proyectoagl-andyla.c9users.io/consumer.php");
+               URL url = new URL("https://proyectoagl-andyla.c9users.io/consumer.php");
                 JsonReader reader = new JsonReader(new InputStreamReader(url.openStream(), "UTF-8"));
                 //readJsonStream(reader);
                 listaUsuarios = readJsonStream(reader);

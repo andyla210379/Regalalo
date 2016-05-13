@@ -30,14 +30,9 @@ public class RegaloAdapter extends RecyclerView.Adapter<RegaloAdapter.AnimeViewH
            //v.setOnClickListener(this);
             //mTextView = (TextView) view
             imagen = (ImageView) v.findViewById(R.id.imagen);
-            nombre = (TextView) v.findViewById(R.id.nombre);
+            nombre = (TextView) v.findViewById(R.id.nombreRegalo);
             visitas = (TextView) v.findViewById(R.id.visitas);
         }
-        /*
-        @Override
-        public void onClick(View v) {
-            Log.d(TAG, "onClick  dflkjasdlkfjsfldjdsalkfja");
-        }*/
     }
 
     public RegaloAdapter(List<Regalo> items) {
@@ -60,6 +55,6 @@ public class RegaloAdapter extends RecyclerView.Adapter<RegaloAdapter.AnimeViewH
     public void onBindViewHolder(AnimeViewHolder viewHolder, int i) {
         viewHolder.imagen.setImageResource(items.get(i).getImagen());
         viewHolder.nombre.setText(items.get(i).getNombre());
-        viewHolder.visitas.setText("Visitas:"+ String.valueOf(items.get(i).getVisitas()));
+        viewHolder.visitas.setText(items.get(i).getDetalle());
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="provincias">
+        <item>A Coruña</item>
+        <item>Alava</item>
+        <item>Albacete</item>
+        <item>Alicante</item>
+        <item>Almeria</item>
+        <item>Asturias</item>
+        <item>Avila</item>
+        <item>Badajoz</item>
+        <item>Baleares</item>
+        <item>Barcelona</item>
+        <item>Burgos</item>
+        <item>Caceres</item>
+        <item>Cadiz</item>
+        <item>Cantabria</item>
+        <item>Castellon</item>
+        <item>Ciudad Real</item>
+        <item>Cordoba</item>
+        <item>Cuenca</item>
+        <item>Girona</item>
+        <item>Granada</item>
+        <item>Guadalajara</item>
+        <item>Gipuzkoa</item>
+        <item>Huelva</item>
+        <item>Huesca</item>
+    </string-array>
+</resources>

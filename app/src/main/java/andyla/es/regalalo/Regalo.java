@@ -4,22 +4,22 @@ package andyla.es.regalalo;
  * Creado AndresGarcia
  */
 public class Regalo {
-    private int imagen;
-    private String nombre;
-    private int visitas;
+    public int imagen;
+    public String nombre;
+    public String detalle;
 
-    public Regalo(int imagen, String nombre, int visitas) {
+    public Regalo(int imagen, String nombre, String detalle) {
         this.imagen = imagen;
         this.nombre = nombre;
-        this.visitas = visitas;
+        this.detalle = detalle;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public int getVisitas() {
-        return visitas;
+    public String getDetalle() {
+        return detalle;
     }
 
     public int getImagen() {

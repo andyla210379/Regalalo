@@ -29,7 +29,7 @@
             android:textAlignment="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/nombre"
+            android:id="@+id/nombreRegalo"
             android:clickable="false"
             android:elegantTextHeight="false" />
 
