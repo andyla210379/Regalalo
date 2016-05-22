@@ -9,31 +9,34 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-feature
-        android:name="android.hardware.camera2"
-        android:required="true" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-feature android:name="android.hardware.camera2"
+                    android:required="true" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@drawable/regalo3"
+        android:label="Regalalo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MenuRegalo"
             android:label="@string/title_activity_menu_regalo"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login">
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".MenuRegaloNuevo"
+            android:label="@string/title_activity_menu_regalo_nuevo"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,9 +44,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MenuRegaloNuevo"
-            android:label="@string/title_activity_menu_regalo_nuevo"
-            android:theme="@style/AppTheme"></activity>
+            android:name=".Busqueda_regalo"
+            android:label="@string/title_activity_busqueda_regalo"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

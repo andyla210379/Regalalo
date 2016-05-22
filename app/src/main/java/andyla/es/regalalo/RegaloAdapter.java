@@ -13,17 +13,17 @@ import java.util.List;
 /**
  * Creado por Andyla
  */
-public class RegaloAdapter extends RecyclerView.Adapter<RegaloAdapter.AnimeViewHolder> {
+public class RegaloAdapter extends RecyclerView.Adapter<RegaloAdapter.RegaloViewHolder> {
     private List<Regalo> items;
 
-    public static class AnimeViewHolder extends RecyclerView.ViewHolder {
+    public static class RegaloViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG ="" ;
         // Campos respectivos de un item
         public ImageView imagen;
         public TextView nombre;
         public TextView visitas;
 
-        public AnimeViewHolder(View v) {
+        public RegaloViewHolder(View v) {
             super(v);
             //
             // Enlace con el layout
@@ -35,8 +35,14 @@ public class RegaloAdapter extends RecyclerView.Adapter<RegaloAdapter.AnimeViewH
         }
     }
 
-    public RegaloAdapter(List<Regalo> items) {
+    public RegaloAdapter(List<Regalo> items)
+    {
         this.items = items;
+    }
+
+    public void changeItems(List<Regalo> itemsNuevos)
+    {
+        this.items = itemsNuevos;
     }
 
     @Override
@@ -45,16 +51,17 @@ public class RegaloAdapter extends RecyclerView.Adapter<RegaloAdapter.AnimeViewH
     }
 
     @Override
-    public AnimeViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public RegaloViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.tarjeta_regalo, viewGroup, false);
-        return new AnimeViewHolder(v);
+        return new RegaloViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(AnimeViewHolder viewHolder, int i) {
-        viewHolder.imagen.setImageResource(items.get(i).getImagen());
+    public void onBindViewHolder(RegaloViewHolder viewHolder, int i) {
+        viewHolder.imagen.setImageBitmap(items.get(i).getImagen());
         viewHolder.nombre.setText(items.get(i).getNombre());
         viewHolder.visitas.setText(items.get(i).getDetalle());
+
     }
 }

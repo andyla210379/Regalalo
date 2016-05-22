@@ -31,4 +31,8 @@
     <string name="title_activity_menu_regalo_nuevo">MenuRegaloNuevo</string>
     <string name="titulo">Titulo</string>
     <string name="descripcion">Descripcion</string>
+    <string name="title_activity_busqueda_regalo">BusquedaRegalo</string>
+    <string name="que_buscas">¿Que buscas?</string>
+    <string name="selecciona_tu_provincia">Selecciona tu provincia:</string>
+    <string name="donde_lo_buscas">¿Donde lo Buscas?</string>
 </resources>

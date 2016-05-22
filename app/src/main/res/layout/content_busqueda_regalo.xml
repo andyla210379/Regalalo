@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:clipToPadding="false"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="¿Que Buscas?"
+            android:textSize="20sp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/txtQueBusqueda"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¿Donde lo Buscas?"
+            android:textSize="20sp"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:backgroundTintMode="multiply"
+            android:backgroundTint="@color/colorPrimary"
+            android:id="@+id/spinnerDondeBusqueda"/>
+    </android.support.design.widget.TextInputLayout>
+</LinearLayout>

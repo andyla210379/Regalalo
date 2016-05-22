@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="4dp"
     card_view:cardUseCompatPadding="true">
@@ -18,27 +18,36 @@
         <ImageView
             android:id="@+id/imagen"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop" >
         </ImageView>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+
+            android:layout_margin="5dp"
             android:textAlignment="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
             android:id="@+id/nombreRegalo"
             android:clickable="false"
-            android:elegantTextHeight="false" />
+            android:elegantTextHeight="false"
+            android:singleLine="true"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
             android:id="@+id/visitas"
+            android:singleLine="true"
+            android:ellipsize="marquee"
             />
 
     </LinearLayout>

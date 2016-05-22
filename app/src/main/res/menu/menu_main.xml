@@ -3,15 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="andyla.es.regalalo.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_logOut"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="LogOut"
         app:showAsAction="never" />
+
 
     <item android:id="@+id/action_search"
         android:title="buscar"
         android:icon="@drawable/ic_action_search"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
+
+
 
 </menu>

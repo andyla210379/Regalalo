@@ -1,6 +1,8 @@
 package andyla.es.regalalo;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -26,23 +28,25 @@ public class MenuRegalo extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //
         CollapsingToolbarLayout collapser = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-
         //
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        int imagen = extras.getInt("imagen");
+        byte [] aImagen = extras.getByteArray("imagen");
+        //
+        // Decodifico el array y lo guardo como imagen
+        Bitmap imagen = BitmapFactory.decodeByteArray(aImagen, 0, aImagen.length);
         String titulo = extras.getString("titulo");
         String detalle = extras.getString("detalle");
         //
         collapser.setTitle(titulo); // Cambiar título
-        //
+        //collapser.setMinimumHeight(imagen.getHeight());
+
         // Enlazo los controles
         textoRegalo = (TextView) findViewById(R.id.textoRegalo);
         imagenRegalo = (ImageView) findViewById(R.id.imagenRegalo);
         //
-        //
         textoRegalo.setText(detalle);
-        imagenRegalo.setImageResource(imagen);
+        imagenRegalo.setImageBitmap(imagen);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

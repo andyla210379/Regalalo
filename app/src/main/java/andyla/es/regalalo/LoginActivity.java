@@ -4,11 +4,13 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -23,6 +25,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.JsonReader;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +35,17 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,7 +55,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -56,17 +72,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private static final int REQUEST_READ_CONTACTS = 0;
     List<User> listaUsuarios;
-
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
-
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private RequestQueue requestQueue;
 
 
     @Override
@@ -110,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         editor.putInt("id",u.userId);
         editor.putString("nombre",u.username);
         editor.putString("password",u.password);
+        editor.putBoolean("loginOK",u.loginOK);
         editor.commit();
     }
     //
@@ -326,14 +342,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         addEmailsToAutoComplete(emails);
     }
-    //
-    // Si se interrumpe la carga
+
+    /**
+     * Si se interrumpe la carga
+     * @param cursorLoader
+     */
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
 
     }
-    //
-    //
+
+    /**
+     * Añade la direccion de correo para autocompletado
+     * @param emailAddressCollection
+     */
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
@@ -342,8 +364,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mEmailView.setAdapter(adapter);
     }
-    //
-    //
+
+    /**
+     * Peticion de perfil de usuario
+     */
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -369,39 +393,124 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //
         @Override
         protected Boolean doInBackground(Void... params) {
+           // AlertDialog alerta = noExisteUsuario();
             try {
-               URL url = new URL("https://proyectoagl-andyla.c9users.io/consumer.php");
+               URL url = new URL("https://proyectoagl-andyla.c9users.io/getAllUser.php");
                 JsonReader reader = new JsonReader(new InputStreamReader(url.openStream(), "UTF-8"));
                 //readJsonStream(reader);
                 listaUsuarios = readJsonStream(reader);
                 reader.close();
+
+                if(listaUsuarios.isEmpty())
+                {
+                    //return false;
+                }
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            for (User credential : listaUsuarios ) {
+
+            for (User usuario : listaUsuarios ) {
                 //
                 // Compruevo el usuario
-                if(credential.username.equals(mEmail)){
+                if(usuario.username.equals(mEmail)){
                     //
                     // Compruevo el password
-                    if(credential.password.equals(mPassword))
+                    if(usuario.password.equals(mPassword))
                     {
+                        usuario.loginOK=true;
                         //
                         // Guardo las preferencias
-                        guardarPreferencias(credential);
+                        guardarPreferencias(usuario);
                         //
                         //Si es correcto retorno true
                         return true;
                     }
                 }
             }
+
             // TODO: register the new account here.
-            return true;
+            return false;
         }
 
+        private void creaUsuario(final String email,final String password)
+        {
+            requestQueue = Volley.newRequestQueue(LoginActivity.this);
+
+            String url = "https://proyectoagl-andyla.c9users.io/createUser.php";
+            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response) {
+                            // response
+                            Log.d("Response", response);
+                            Toast.makeText(LoginActivity.this, "Usuario Creado", Toast.LENGTH_SHORT).show();
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Log.d("Error.Response", "Error en la respuesta");
+                            Toast.makeText(LoginActivity.this, "Error al crear el Usuario", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams()
+                {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("email", email);
+                    params.put("password", password);
+
+                    return params;
+                }
+            };
+           requestQueue.add(postRequest);
+           // requestQueue.add(jsArrayRequest);
+
+        }
+
+        /**
+         * Crea un diálogo de alerta sencillo
+         * @return Nuevo diálogo
+         */
+        public AlertDialog noExisteUsuario()
+        {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+            builder.setTitle("El usuario no existe")
+                    .setMessage("Desea crear un nuevo usuario?")
+                    .setPositiveButton("OK",
+                            new DialogInterface.OnClickListener()  {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    creaUsuario(mEmail,mPassword);
+                                    mPasswordView.setText(mPassword);
+                                    mEmailView.setText(mEmail);
+                                }
+                            })
+                    .setNegativeButton("CANCELAR",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                                    mPasswordView.requestFocus();
+                                }
+                            });
+
+            return builder.create();
+        }
+
+        /***
+         * Cuando se ejecuta el metodo de conexion
+         * @param success
+         */
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
@@ -411,15 +520,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);
                 LoginActivity.this.startActivity(myIntent);
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                AlertDialog alerta = noExisteUsuario();
+                alerta.show();
+
             }
         }
+
+        /***
+         * Cuando se cancela la conexion
+         */
         @Override
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
         }
+    }
+    /**
+     * Cuando se pausa la conexion
+     */
+    @Override
+    protected void onPause(){
+        super.onPause();
+        finish();       //termina la actividad
     }
 }
 

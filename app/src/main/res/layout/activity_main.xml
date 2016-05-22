@@ -41,6 +41,7 @@
                 android:id="@+id/reciclador"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="?attr/actionBarSize"
                 android:padding="3dp"
                 android:scrollbars="vertical" />
 
@@ -51,7 +52,18 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:layout_margin="@dimen/fab_margin"
-                android:src="@android:drawable/ic_menu_camera" />
+                android:src="@drawable/ic_gift_white_24dp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabCancelarBusqueda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="@dimen/fab_margin"
+                android:visibility="invisible"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:background="@color/design_textinput_error_color_light"
+                app:backgroundTint="@color/design_textinput_error_color_light" />
 
         </android.support.design.widget.CoordinatorLayout>
 
