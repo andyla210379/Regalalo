@@ -2,70 +2,39 @@ package andyla.es.regalalo;
 //
 import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.graphics.Rect;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.DrawableRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.PermissionChecker;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
-import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-//
+
 /**
  * Creado por AndresGarcia
  */
@@ -83,10 +52,10 @@ public class MainActivity extends AppCompatActivity {
     public List<Regalo> items = new ArrayList<>();
     JsonObjectRequest jsArrayRequest;
     //
-    static  final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     //
-    DrawerLayout drawerLayout;
-    NavigationView navView;
+    public DrawerLayout drawerLayout;
+    public NavigationView navView;
 
     @Override
 
@@ -130,11 +99,12 @@ public class MainActivity extends AppCompatActivity {
         //
         //recycler.setHasFixedSize(true);
 
-        // Usar un administrador para LinearLayout
-        //lManager = new GridLayoutManager(this,2);
-        // lManager = new LinearLayoutManager(this);
+        //  Usar un administrador para LinearLayout
+        //  lManager = new GridLayoutManager(this,2);
+        //  lManager = new LinearLayoutManager(this);
         lManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         recycler.setLayoutManager(lManager);
+
         //
         // Crear un nuevo adaptador
         adapter = new RegaloAdapter(items);
@@ -142,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         //
         // Llama al metdodo para iniciar la camara
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        // Boton para regalo nuevo
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
          fabCancelarBusqueda = (FloatingActionButton) findViewById(R.id.fabCancelarBusqueda);
-
+        // Boton que controla el reinicio de la busqueda
         fabCancelarBusqueda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,9 +171,7 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.menu_opcion_1:
                                 Log.i("NavigationView", "Pulsada opción 1");
                                 break;
-                            case R.id.menu_opcion_2:
-                                Log.i("NavigationView", "Pulsada opción 2");
-                                break;
+
                         }
 
                         if(fragmentTransaction) {
@@ -223,8 +192,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //
-    // Abre el menu de hacer la foto
+    /**
+     * Abre el intent para hacer la foto
+     */
     private void llamarIntentFoto()
     {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -233,15 +203,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void llamarIntentMenuRegaloNuevo(byte [] imagen)
-    {
-        Intent menuRegaloNuevo = new Intent(getApplicationContext(),MenuRegaloNuevo.class);
-        menuRegaloNuevo.putExtra("imagen",imagen);
-        startActivity(menuRegaloNuevo,ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-    }
-
-    //
-    // Recojo los resultados del activiti
+    /**
+     * Recoje los retultados del activity que hace la foto
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK)
@@ -261,9 +228,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    /**
+     * Cambia al activiti para regalo nuevo
+     * @param imagen
+     */
+    private void llamarIntentMenuRegaloNuevo(byte [] imagen)
+    {
+        Intent menuRegaloNuevo = new Intent(getApplicationContext(),MenuRegaloNuevo.class);
+        menuRegaloNuevo.putExtra("imagen",imagen);
+        startActivity(menuRegaloNuevo,ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
 
-    //
-    // Cuando hago click en una tarjeta
+
+
+    /**
+     * Controla el click en cada trarjeta y cambia de activity
+     * @param position
+     */
     public void onClickTarjeta(int position)
     {
         String titulo= this.items.get(position).getNombre();
@@ -280,8 +261,10 @@ public class MainActivity extends AppCompatActivity {
         // Inicio la vista
         startActivity(detalleRegalo,ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
-    //
-    // Cargo los datos de SharedPreferences
+
+    /**
+     * Carga los parametros de sharedpreferences
+     */
     public void cargarPreferencias()
     {
         String password;
@@ -294,17 +277,11 @@ public class MainActivity extends AppCompatActivity {
         usuario=new User(id,nombre,password);
     }
 
-    //
-    // Cambio de activity
-    public void pasoMenuRegalo(String titulo,int imagen,String detalle)
-    {
-        Intent detalleRegalo = new Intent(getApplicationContext(),MenuRegalo.class);
-        detalleRegalo.putExtra("detalle",detalle);
-        startActivity(detalleRegalo,ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-    }
-
-    //
-    // Metodo inicio del menu
+    /**
+     * Carga el menu con el array
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -325,8 +302,12 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean("loginOK",false);
         editor.commit();
     }
-    //
-    // Metodo que controla el actionbar
+
+    /**
+     * Metodo que controla el actionbar
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -341,22 +322,16 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         else if(id == R.id.action_search){
-
-
             Intent busquedaRegalo = new Intent(getApplicationContext(),Busqueda_regalo.class);
             startActivity(busquedaRegalo);
-            //AlertDialog busqueda = crearDialogoBusqueda();
-            //busqueda.show();
             return true;
         }
-
         switch(item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             //...
     }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -404,7 +379,9 @@ public class MainActivity extends AppCompatActivity {
     public void parseJson(JSONObject jsonObject){
         // Variables locales
         //List<Regalo> posts = new ArrayList();
-        if(!items.isEmpty())items.clear();
+        if(!items.isEmpty()) {
+            items.clear();
+        }
         JSONArray jsonArray= null;
         try {
             // Obtener el array del objeto
@@ -432,8 +409,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
+    /**
+     * Borra los parametros de la busqueda de sharedpreferences
+     */
     public void borrarParametrosBusqueda()
     {
         SharedPreferences misPreferencias = getSharedPreferences("preferenciasUsuario", Context.MODE_PRIVATE);
@@ -444,7 +422,9 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
     }
 
-
+    /**
+     * Sobrecarga para el reinicio del activiti
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -461,10 +441,12 @@ public class MainActivity extends AppCompatActivity {
         if(hayBusqueda)
         {
             getRegalos(URL_BUSQUEDA_REGALO+"?"+"titulo="+titulo+"&localidad="+localidad);
+
+
+            //Log.i("Cadena de conexion",URL_BUSQUEDA_REGALO+"?"+"titulo="+titulo+"&localidad="+localidad);
+            fabCancelarBusqueda.show();
             Integer numeroItems= items.size();
             Log.i("Numero de items",numeroItems.toString());
-            Log.i("Cadena de conexion",URL_BUSQUEDA_REGALO+"?"+"titulo="+titulo+"&localidad="+localidad);
-            fabCancelarBusqueda.show();
             //borrarParametrosBusqueda();
         }
         else
@@ -480,8 +462,6 @@ public class MainActivity extends AppCompatActivity {
         //finish();
         //startActivity(MainActivity.this.getIntent());
     }
-
-
 }
 
 

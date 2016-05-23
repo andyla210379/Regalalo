@@ -35,4 +35,5 @@
     <string name="que_buscas">¿Que buscas?</string>
     <string name="selecciona_tu_provincia">Selecciona tu provincia:</string>
     <string name="donde_lo_buscas">¿Donde lo Buscas?</string>
+    <string name="title_activity_menu_usuario">MenuUsuario</string>
 </resources>

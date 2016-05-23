@@ -12,8 +12,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <uses-feature android:name="android.hardware.camera2"
-                    android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -46,7 +47,11 @@
         <activity
             android:name=".Busqueda_regalo"
             android:label="@string/title_activity_busqueda_regalo"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".MenuUsuario"
+            android:label="@string/title_activity_menu_usuario"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -3,16 +3,17 @@
 <group android:checkableBehavior="single">
     <item
         android:id="@+id/menu_seccion_1"
-        android:icon="@drawable/ic_menu"
-        android:title="@string/seccion_1"/>
-    <item
-        android:id="@+id/menu_seccion_2"
-        android:icon="@drawable/ic_menu"
-        android:title="@string/seccion_2"/>
+        android:icon="@drawable/accountsettings"
+        android:title="Usuario"/>
     <item
         android:id="@+id/menu_seccion_3"
         android:icon="@drawable/ic_menu"
-        android:title="@string/seccion_3"/>
+        android:title="Mensajes"/>
+    <item
+        android:id="@+id/menu_seccion_2"
+        android:icon="@drawable/ic_menu"
+        android:title="Tus Regalos"/>
+
 </group>
 
 <item
@@ -22,11 +23,13 @@ android:title="@string/otras_opciones">
     <item
         android:id="@+id/menu_opcion_1"
         android:icon="@drawable/ic_menu"
-        android:title="@string/opcion_1"/>
+        android:title="Recomienda"/>
     <item
-        android:id="@+id/menu_opcion_2"
-        android:icon="@drawable/ic_menu"
-        android:title="@string/opcion_2"/>
+        android:id="@+id/menu_opcion_Salir"
+        android:icon="@drawable/logout"
+        android:title=""
+        />
+
 </menu>
 </item>
     </menu>
