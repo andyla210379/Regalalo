@@ -57,4 +57,10 @@ public class MenuUsuario extends AppCompatActivity {
         usuario=new User(id,nombre,password);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

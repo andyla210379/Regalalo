@@ -67,14 +67,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //
-        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_nav_menu);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_nav_menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setDisplayUseLogoEnabled(true);
         //getSupportActionBar().setLogo(R.drawable.regalo3);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
         //getSupportActionBar().setIcon(R.drawable.regalo3);
-
         //
         // Cargo las Sharedpreferences
         cargarPreferencias();
@@ -84,9 +83,6 @@ public class MainActivity extends AppCompatActivity {
         //
         // Obtener el Recycler
         recycler = (RecyclerView) findViewById(R.id.reciclador);
-
-
-        //
         recycler.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     public static final String TAG ="" ;
@@ -157,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
 
                         switch (menuItem.getItemId()) {
                             case R.id.menu_seccion_1:
-                                fragment = new Fragment1();
-                                fragmentTransaction = true;
+                                llamarIntentConfigUser();
+
                                 break;
                             case R.id.menu_seccion_2:
                                 fragment = new Fragment2();
@@ -239,7 +235,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(menuRegaloNuevo,ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
+    /**
+     * Llama al menu de configuracion de usuario
+     */
+    private void llamarIntentConfigUser()
+    {
+        Intent configUser = new Intent(getApplicationContext(),MenuUsuario.class);
 
+        startActivity(configUser,ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
 
     /**
      * Controla el click en cada trarjeta y cambia de activity

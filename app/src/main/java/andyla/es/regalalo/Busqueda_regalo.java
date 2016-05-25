@@ -71,4 +71,10 @@ public class Busqueda_regalo extends AppCompatActivity {
         editor.putBoolean("hayBusqueda",true);
         editor.commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

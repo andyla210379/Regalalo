@@ -29,6 +29,8 @@ dependencies {
     compile project(':volley')
 
         compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
+        compile 'com.pushbots:pushbots-lib:2.0.13@aar'
+        compile 'com.android.support:support-v4:23.0.0'
         compile (group: 'org.apache.httpcomponents' , name: 'httpmime' , version: '4.3.5') {
             exclude module: 'org.apache.httpcomponents:httpclient'}
 
