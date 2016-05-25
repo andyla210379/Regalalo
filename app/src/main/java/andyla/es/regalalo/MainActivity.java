@@ -27,6 +27,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.pushbots.push.Pushbots;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Pushbots.sharedInstance().init(this);
+        String regId=Pushbots.sharedInstance().regID();
+        guardarIdPusBots(regId);
+        //
+        //
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(R.layout.activity_main);
         //
@@ -184,8 +192,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-
-
     }
 
     /**
@@ -271,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void cargarPreferencias()
     {
+
         String password;
         String nombre;
         int id;
@@ -465,6 +472,14 @@ public class MainActivity extends AppCompatActivity {
 
         //finish();
         //startActivity(MainActivity.this.getIntent());
+    }
+
+    public void guardarIdPusBots(String id)
+    {
+        SharedPreferences misPreferencias = getSharedPreferences("preferenciasUsuario", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = misPreferencias.edit();
+        editor.putString("pushbot",id);
+        editor.commit();
     }
 }
 
