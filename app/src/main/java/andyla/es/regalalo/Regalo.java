@@ -6,14 +6,22 @@ import android.util.Base64;
 
 /**
  * Creado AndresGarcia
+ * Clase regalo que retorna un objeto regalo con sus atributos
  */
 public class Regalo {
-    public byte[] aImagen;
-    public Bitmap imagen;
-    public String nombre;
-    public String detalle;
-    public String provincia;
+    public byte[] aImagen;// Array de bytes para almacenar la imagen en base64
+    public Bitmap imagen; // Imagen en Bmp
+    public String nombre; // Titulo del regalo
+    public String detalle;// Detalle del regalo o descripcion
+    public String provincia;// Provincia a la que pertenece.
 
+    /**Constructor
+     *
+     * @param imagen
+     * @param nombre
+     * @param detalle
+     * @param provincia
+     */
     public Regalo(String imagen, String nombre, String detalle,String provincia) {
 
         setData(imagen);
@@ -22,6 +30,10 @@ public class Regalo {
         this.provincia = provincia;
     }
 
+    /**
+     * Geters
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
@@ -34,6 +46,13 @@ public class Regalo {
         return this.imagen;
     }
 
+    public String getProvincia(){return this.provincia;}
+
+    /**
+     * Metodo que cambia la imagen del regalo en funcon de un String en base 64
+     * que se convierte a un array de bytes
+     * @param data
+     */
     public void setData(String data) {
         //this.aImagen = data;
         try {
@@ -45,6 +64,5 @@ public class Regalo {
             e.printStackTrace();
         }
     }
-
-    public String getProvincia(){return this.provincia;}
 }
+

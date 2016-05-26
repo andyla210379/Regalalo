@@ -540,7 +540,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
     /**
-     * Cuando se pausa la conexion
+     * Cuando se pausa la Actividad
      */
     @Override
     protected void onPause(){
