@@ -7,9 +7,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RatingBar;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MenuUsuario extends AppCompatActivity {
 
@@ -18,6 +29,7 @@ public class MenuUsuario extends AppCompatActivity {
     private EditText getTxtPasswordUserConfigConfirm;
     private RatingBar rtnEstrellasUsuarioConfig;
     private User usuario;
+    private String URL = "https://proyectoagl-andyla.c9users.io/updateUser.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +51,71 @@ public class MenuUsuario extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                if(txtLoginUserConfig.getText().equals("") || txtPasswordUserConfig.getText().equals(""))
+                {
+                    Snackbar.make(view, "Los campos no pueden estar vacios", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+
+                }
+                else if (!txtPasswordUserConfig.getText().toString().trim().equals(getTxtPasswordUserConfigConfirm.getText().toString().trim()))
+                {
+                    Snackbar.make(view, "Las contraseñas no coinciden", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+                else
+                {
+                    usuario.username = txtLoginUserConfig.getText().toString().trim();
+                    usuario.password = txtPasswordUserConfig.getText().toString().trim();
+                    cambiarDatosUsuario(usuario);
+                    guardarPreferencias(usuario);
+                    finish();
+                }
+
+
             }
         });
+    }
+
+    public void cambiarDatosUsuario(User u)
+    {
+        RequestQueue queue = Volley.newRequestQueue(this);  // this = context
+
+        //url = "http://httpbin.org/put";
+        StringRequest putRequest = new StringRequest(Request.Method.PUT, URL,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+
+                       // Log.d("Error.Response", response);
+                    }
+                }
+        ) {
+
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("nombre",usuario.username.toString() );
+                params.put("password", usuario.password.toString());
+                params.put("id",usuario.userId.toString());
+
+                return params;
+            }
+
+        };
+
+        queue.add(putRequest);
     }
 
     public void cargarPreferencias()
@@ -55,6 +128,17 @@ public class MenuUsuario extends AppCompatActivity {
         nombre= misPreferencias.getString("nombre","");
         password = misPreferencias.getString("password","");
         usuario=new User(id,nombre,password);
+    }
+
+    public void guardarPreferencias(User u)
+    {
+        SharedPreferences misPreferencias = getSharedPreferences("preferenciasUsuario", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = misPreferencias.edit();
+        editor.putInt("id",u.userId);
+        editor.putString("nombre",u.username);
+        editor.putString("password",u.password);
+        editor.putBoolean("loginOK",u.loginOK);
+        editor.commit();
     }
 
 

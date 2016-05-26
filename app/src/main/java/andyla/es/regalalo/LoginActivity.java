@@ -270,13 +270,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
     //
-    // Si es un correo valido
+
+    /**
+     * Comprueba que sea una direccion de correo valida
+     * @param email
+     * @return
+     */
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@") && (email.contains(".es") || email.contains(".com"));
     }
-    //
-    // Si no es una contraseña valida
+
+    /***
+     * Comprueba que sea una contraseña valida
+     * @param password
+     * @return
+     */
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
@@ -286,9 +295,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -309,12 +316,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             });
         } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
+
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
+
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(this,
@@ -329,8 +336,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // a primary email address if the user hasn't specified one.
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
     }
-    //
-    //
+
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         List<String> emails = new ArrayList<>();
@@ -348,9 +354,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * @param cursorLoader
      */
     @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {}
 
     /**
      * Añade la direccion de correo para autocompletado
@@ -377,9 +381,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
+
     /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
+     * Repreenta una actividad Asincrona para no interferir en la aplicacion
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -390,7 +394,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmail = email;
             mPassword = password;
         }
-        //
+
         @Override
         protected Boolean doInBackground(Void... params) {
            // AlertDialog alerta = noExisteUsuario();
